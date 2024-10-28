@@ -274,7 +274,7 @@ export default function Component() {
       </motion.div> */}
       <footer className="container mx-auto px-4 py-8">
         <h2 className="text-2xl font-bold mb-6 mt-8 extrasquare-font md:text-left text-center">
-          გვეწვიეთ სოცუალურ ქსელებში
+          გვეწვიეთ სოციალურ ქსელებში
         </h2>
         <div className="flex justify-center flex-col md:flex-row md:justify-start space-x-0 md:space-x-4 space-y-4 md:space-y-0 mb-8">
           {[
