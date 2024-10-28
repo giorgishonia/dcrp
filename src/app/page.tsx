@@ -300,7 +300,7 @@ export default function Component() {
         </div>
         <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
           <nav className="space-y-2 md:space-y-0 md:space-x-4 mb-4 md:mb-0 text-center w-full flex flex-row justify-around md:justify-start items-end md:flex-row">
-            {["მთავარი", "დონაცია", "Discord"].map((item, index) => (
+            {["მთავარი", "დონაცია", "Discord"].map((item) => (
               <a
                 key={item}
                 href={
