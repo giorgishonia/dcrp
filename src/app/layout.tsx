@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     url: "https://www.darkcity-rp.online/",
     images: [
       {
-        url: "https://images8.alphacoders.com/107/1077297.png",
+        url: "https://cdn.discordapp.com/attachments/1299826277070409870/1300561279467126784/standard_1.gif?ex=67214994&is=671ff814&hm=231e496b8d1a32272fb7978b27192bd3606acec2b325852f36d05a1ef6a66013&",
         width: 800,
         height: 600,
         alt: "Dark City RP Image",
