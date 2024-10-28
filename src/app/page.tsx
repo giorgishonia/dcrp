@@ -173,11 +173,11 @@ export default function Component() {
           </div>
           <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mb-16">
             <motion.button
-              className="bg-transparent border-2 border-white px-6 py-3 rounded-full hover:bg-white hover:text-gray-900 transition duration-300 extrasquare-font flex items-center"
+              className="bg-transparent border-2 border-white text-center flex justify-center px-6 py-3 rounded-full hover:bg-white hover:text-gray-900 transition duration-300 extrasquare-font"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <FaDownload className="w-5 h-5 mr-2" /> {/* Add the icon here */}
+              <FaDownload className="w-5 h-5 mr-2" />
               ლაუნჩერის ჩაწერა
             </motion.button>
 
@@ -187,7 +187,7 @@ export default function Component() {
               rel="noopener noreferrer"
             >
               <motion.button
-                className="bg-yellow-500 text-gray-900 text-[15px] tracking-tight px-6 py-4 rounded-full hover:bg-yellow-600 transition duration-300 flex items-center justify-center extrasquare-font"
+                className="bg-yellow-500 text-gray-900 text-[15px] tracking-tight px-6 py-4 rounded-full w-full hover:bg-yellow-600 transition duration-300 flex items-center justify-center extrasquare-font"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -197,28 +197,17 @@ export default function Component() {
             </a>
           </div>
 
-          <motion.div className="flex flex-col items-center md:items-start relative">
-            <div className="flex items-center">
-              <p className="text-sm extrasquare-font md:text-left">
-                85.117.36.229:1113
-              </p>
-              <button
-                onClick={copyIPToClipboard}
-                className="ml-2 bg-zinc-800 bg-opacity-70 text-gray-900 p-2 rounded-[10px] hover:bg-zinc-700 transition duration-300 flex items-center"
-              >
-                <Clipboard className="h-4 w-4 invert" />
-                {/* Clipboard icon */}
-              </button>
-            </div>
-            <p className="text-sm font-bold text-green-400 extrasquare-font md:text-left mt-1">
-              ახლა ონლაინ
-            </p>
-            {copyMessage && (
-              <span className="absolute font-bold -top-8 text-sm extrasquare-font text-green-400">
-                {copyMessage}
-              </span>
-            )}
-          </motion.div>
+          {copyMessage && (
+            <motion.div
+              initial={{ opacity: 0, translateY: -10 }} // Initial state (hidden)
+              animate={{ opacity: 1, translateY: 0 }} // State when it is visible
+              exit={{ opacity: 0, translateY: -10 }} // State when it is exiting
+              transition={{ duration: 0.5 }} // Animation duration
+              className="absolute font-bold -top-8 text-sm extrasquare-font text-green-400"
+            >
+              {copyMessage}
+            </motion.div>
+          )}
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 extrasquare-font">
