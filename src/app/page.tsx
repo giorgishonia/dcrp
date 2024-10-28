@@ -98,10 +98,10 @@ export default function Component() {
           {/* Logo can go here */}
         </motion.div>
         <nav className="hidden md:flex space-x-6">
-          {["მთავარი", "სიახლეები", "დონაცია"].map((item, index) => (
+          {["მთავარი", "დონაცია"].map((item, index) => (
             <motion.a
               key={item}
-              href={item === "დონაცია" ? "/" : item === "სიახლეები" ? "/" : "/"}
+              href={item === "დონაცია" ? "/" : "#"}
               className={`${
                 index === 0
                   ? "text-yellow-500 flex items-center justify-center align-center"
@@ -133,7 +133,7 @@ export default function Component() {
             className="md:hidden fixed inset-0 bg-zinc-900 bg-opacity-80 backdrop-blur z-40"
           >
             <nav className="flex flex-col items-center justify-center h-full">
-              {["მთავარი", "სიახლეები", "დონაცია"].map((item, index) => (
+              {["მთავარი", "დონაცია"].map((item, index) => (
                 <motion.a
                   key={item}
                   href={item === "დონაცია" ? "/" : "#"} // Update here for donation page
@@ -178,14 +178,20 @@ export default function Component() {
             >
               შესვლა
             </motion.button>
-            <motion.button
-              className="bg-yellow-500 text-gray-900 text-[15px] tracking-tight px-6 py-4 rounded-full hover:bg-yellow-600 transition duration-300 flex items-center justify-center extrasquare-font"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <a
+              href="https://discord.gg/darkcityrp"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              შემოგვიერთდი Discord-ზე
-              <ChevronRight className="ml-2" />
-            </motion.button>
+              <motion.button
+                className="bg-yellow-500 text-gray-900 text-[15px] tracking-tight px-6 py-4 rounded-full hover:bg-yellow-600 transition duration-300 flex items-center justify-center extrasquare-font"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                შემოგვიერთდი Discord-ზე
+                <ChevronRight className="ml-2" />
+              </motion.button>
+            </a>
           </div>
 
           <motion.div className="flex flex-col items-center md:items-start relative">
@@ -314,7 +320,7 @@ export default function Component() {
               </a>
             ))}
           </nav>
-          <div className="text-center extrasquare-font flex justify-center flex-col w-full">
+          <div className="text-end extrasquare-font flex justify-center flex-col w-full">
             <p className="flex flex-col">
               &copy; 2024 Dark City Roleplay. <span>ყველა უფლება დაცულია.</span>
             </p>
