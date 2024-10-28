@@ -197,17 +197,28 @@ export default function Component() {
             </a>
           </div>
 
-          {copyMessage && (
-            <motion.div
-              initial={{ opacity: 0, translateY: -10 }} // Initial state (hidden)
-              animate={{ opacity: 1, translateY: 0 }} // State when it is visible
-              exit={{ opacity: 0, translateY: -10 }} // State when it is exiting
-              transition={{ duration: 0.5 }} // Animation duration
-              className="absolute font-bold -top-8 text-sm extrasquare-font text-green-400"
-            >
-              {copyMessage}
-            </motion.div>
-          )}
+          <motion.div className="flex flex-col items-center md:items-start relative">
+            <div className="flex items-center">
+              <p className="text-sm extrasquare-font md:text-left">
+                85.117.36.229:1113
+              </p>
+              <button
+                onClick={copyIPToClipboard}
+                className="ml-2 bg-zinc-800 bg-opacity-70 text-gray-900 p-2 rounded-[10px] hover:bg-zinc-700 transition duration-300 flex items-center"
+              >
+                <Clipboard className="h-4 w-4 invert" />
+                {/* Clipboard icon */}
+              </button>
+            </div>
+            <p className="text-sm font-bold text-green-400 extrasquare-font md:text-left mt-1">
+              ახლა ონლაინ
+            </p>
+            {copyMessage && (
+              <span className="absolute font-bold -top-8 text-sm extrasquare-font text-green-400">
+                {copyMessage}
+              </span>
+            )}
+          </motion.div>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 extrasquare-font">
