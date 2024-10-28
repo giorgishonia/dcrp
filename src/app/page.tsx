@@ -1,7 +1,8 @@
 "use client";
 
+import { FaDownload } from "react-icons/fa";
 import Image from "next/image";
-import { useMemo } from "react"; // Add this import
+import { useMemo } from "react";
 import { ChevronRight, Menu, Clipboard } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
@@ -172,12 +173,14 @@ export default function Component() {
           </div>
           <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mb-16">
             <motion.button
-              className="bg-transparent border-2 border-white px-6 py-3 rounded-full hover:bg-white hover:text-gray-900 transition duration-300 extrasquare-font"
+              className="bg-transparent border-2 border-white px-6 py-3 rounded-full hover:bg-white hover:text-gray-900 transition duration-300 extrasquare-font flex items-center"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              შესვლა
+              <FaDownload className="w-5 h-5 mr-2" /> {/* Add the icon here */}
+              ლაუნჩერის ჩაწერა
             </motion.button>
+
             <a
               href="https://discord.gg/darkcityrp"
               target="_blank"
