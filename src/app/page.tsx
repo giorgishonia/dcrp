@@ -1,6 +1,6 @@
 "use client";
 
-import { FaDownload } from "react-icons/fa";
+// import { FaDownload } from "react-icons/fa";
 import Image from "next/image";
 import { useMemo } from "react";
 import { ChevronRight, Menu, Clipboard, Check } from "lucide-react";
