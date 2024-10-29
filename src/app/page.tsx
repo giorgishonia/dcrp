@@ -3,36 +3,68 @@
 import { FaDownload } from "react-icons/fa";
 import Image from "next/image";
 import { useMemo } from "react";
-import { ChevronRight, Menu, Clipboard } from "lucide-react";
+import { ChevronRight, Menu, Clipboard, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
+import { FaRightToBracket } from "react-icons/fa6";
 
 export default function Component() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [serverStatus, setServerStatus] = useState({
+    online: false,
+    players: "0/0",
+    ip: "141.95.190.141:1361",
+  });
+  const [isCopied, setIsCopied] = useState(false);
+
+  useEffect(() => {
+    const fetchServerStatus = async () => {
+      try {
+        const response = await fetch(
+          "https://api.gamemonitoring.net/servers/6474613"
+        );
+        const data = await response.json();
+
+        setServerStatus({
+          online: data.response.status,
+          players: `${data.response.numplayers} / ${data.response.maxplayers}`,
+          ip: data.response.connect,
+        });
+      } catch (error) {
+        console.error("Failed to fetch server status:", error);
+      }
+    };
+
+    fetchServerStatus();
+    // Fetch every 30 seconds
+    const interval = setInterval(fetchServerStatus, 30000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   const slogans = useMemo(
     () => [
-      "იცხოვრე შენი მეორე ცხოვრება აქ",
+      "შესაძლებლობებით სავსე გარემო",
       "თქვენი ისტორია იწყება აქ",
       "შექმენი შენი გზა სან ანდრეასში",
-      "აღმოაჩინე ახალი ცხოვრება აქ",
+      "აღმოაჩინე ახალი ცხოვრება",
       "შენი თავგადასავალი იწყება ახლა",
       "გახდი ლეგენდა სან ანდრეასში",
       "შენი შესაძლებლობები უსასრულოა",
       "გაიკვალე შენი გზა",
       "ჩართე თამაში, შექმენი ისტორია",
       "შენი წესები, შენი თამაში",
-      "დაიწყე შენი თავგადასავალი აქ",
+      "დაიწყე შენი თავგადასავალი",
     ],
     []
-  ); // Use useMemo to memoize the slogans array
-  const [copyMessage, setCopyMessage] = useState("");
+  );
 
   const copyIPToClipboard = () => {
     navigator.clipboard
-      .writeText("85.117.36.229:1113") // Use the IP address here
+      .writeText(serverStatus.ip)
       .then(() => {
-        setCopyMessage("მისამართი კოპირებულია");
-        setTimeout(() => setCopyMessage(""), 2000); // Clear message after 2 seconds
+        setIsCopied(true);
+        setTimeout(() => setIsCopied(false), 2000);
       })
       .catch((err) => console.error("Failed to copy: ", err));
   };
@@ -47,7 +79,6 @@ export default function Component() {
     const animateText = async () => {
       const currentSlogan = slogans[currentSloganIndex];
 
-      // Typing animation
       if (isTyping) {
         if (displayedText.length < currentSlogan.length) {
           timeout = setTimeout(() => {
@@ -58,9 +89,7 @@ export default function Component() {
             setIsTyping(false);
           }, 4000);
         }
-      }
-      // Deleting animation
-      else {
+      } else {
         if (displayedText.length > 0) {
           timeout = setTimeout(() => {
             setDisplayedText(displayedText.slice(0, -1));
@@ -116,7 +145,6 @@ export default function Component() {
             </motion.a>
           ))}
         </nav>
-        {/* Mobile Menu Button */}
         <button
           className="md:hidden p-2 text-gray-300 hover:text-white"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -137,7 +165,7 @@ export default function Component() {
               {["მთავარი", "დონაცია"].map((item, index) => (
                 <motion.a
                   key={item}
-                  href={item === "დონაცია" ? "/" : "#"} // Update here for donation page
+                  href={item === "დონაცია" ? "/" : "#"}
                   className={`${
                     index === 0
                       ? "text-yellow-500"
@@ -171,15 +199,18 @@ export default function Component() {
               <span className="inline-block w-0.5 h-4 translate-y-1 bg-white ml-1 animate-pulse"></span>
             </p>
           </div>
-          <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mb-16">
-            <motion.button
+          <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mb-12">
+            <motion.a
               className="bg-transparent border-2 border-white text-center flex justify-center px-6 py-3 rounded-full hover:bg-white hover:text-gray-900 transition duration-300 extrasquare-font"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              href="https://gamemonitoring.net/samp/servers/6474613/connect"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              <FaDownload className="w-5 h-5 mr-2" />
-              ლაუნჩერის ჩაწერა
-            </motion.button>
+              <FaRightToBracket className="w-5 h-5 mr-2" />
+              სერვერში შესვლა
+            </motion.a>
 
             <a
               href="https://discord.gg/darkcityrp"
@@ -196,28 +227,69 @@ export default function Component() {
               </motion.button>
             </a>
           </div>
-
-          <motion.div className="flex flex-col items-center md:items-start relative">
-            <div className="flex items-center">
-              <p className="text-sm extrasquare-font md:text-left">
-                85.117.36.229:1113
-              </p>
-              <button
-                onClick={copyIPToClipboard}
-                className="ml-2 bg-zinc-800 bg-opacity-70 text-gray-900 p-2 rounded-[10px] hover:bg-zinc-700 transition duration-300 flex items-center"
-              >
-                <Clipboard className="h-4 w-4 invert" />
-                {/* Clipboard icon */}
-              </button>
-            </div>
-            <p className="text-sm font-bold text-green-400 extrasquare-font md:text-left mt-1">
-              ახლა ონლაინ
-            </p>
-            {copyMessage && (
-              <span className="absolute font-bold -top-8 text-sm extrasquare-font text-green-400">
-                {copyMessage}
-              </span>
-            )}
+          <motion.div
+            className="flex flex-col md:flex-row justify-center md:justify-start items-center md:space-x-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <span
+              id="playerCount"
+              className="text-4xl md:text-5xl font-bold text-yellow-500 tracking-wider mb-2 md:mb-0 extrasquare-font"
+            >
+              {serverStatus.players}
+            </span>
+            <motion.div className="flex flex-col items-center md:items-start relative">
+              <div className="flex items-center">
+                <p className="text-sm extrasquare-font md:text-left">
+                  {serverStatus.ip}
+                </p>
+                <motion.button
+                  onClick={copyIPToClipboard}
+                  className="ml-2 bg-zinc-800 bg-opacity-70 text-gray-900 p-2 rounded-[10px] hover:bg-zinc-700 transition duration-300 flex items-center"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <AnimatePresence mode="wait">
+                    {isCopied ? (
+                      <motion.div
+                        key="check"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <Check className="h-4 w-4 invert" />
+                      </motion.div>
+                    ) : (
+                      <motion.div
+                        key="clipboard"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <Clipboard className="h-4 w-4 invert" />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.button>
+              </div>
+              <div className="flex items-center gap-2">
+                <div
+                  className={`w-2 h-2 rounded-full ${
+                    serverStatus.online ? "bg-green-400" : "bg-red-400"
+                  }`}
+                />
+                <p
+                  className={`text-sm font-bold extrasquare-font md:text-left ${
+                    serverStatus.online ? "text-green-500" : "text-red-500"
+                  }`}
+                >
+                  {serverStatus.online ? "ონლაინ" : "ოფლაინ"}
+                </p>
+              </div>
+            </motion.div>
           </motion.div>
         </motion.div>
 
@@ -256,22 +328,6 @@ export default function Component() {
           ))}
         </div>
       </main>
-      {/* <motion.div
-        className="flex justify-center mb-8"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/YOUR_VIDEO_ID" // Replace with your actual YouTube video ID
-          title="YouTube video player"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
-      </motion.div> */}
       <footer className="container mx-auto px-4 py-8">
         <h2 className="text-2xl font-bold mb-6 mt-8 extrasquare-font md:text-left text-center">
           გვეწვიეთ სოციალურ ქსელებში
