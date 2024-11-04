@@ -1,114 +1,114 @@
 "use client";
 
 // import { FaDownload } from "react-icons/fa";
-import Image from "next/image";
-import { useMemo } from "react";
-import { ChevronRight, Menu, Clipboard, Check } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
-import { FaRightToBracket } from "react-icons/fa6";
+// import Image from "next/image";
+// import { useMemo } from "react";
+// import { ChevronRight, Menu, Clipboard, Check } from "lucide-react";
+// import { motion, AnimatePresence } from "framer-motion";
+// import { useState, useEffect } from "react";
+// import { FaRightToBracket } from "react-icons/fa6";
 
 export default function Component() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [serverStatus, setServerStatus] = useState({
-    online: false,
-    players: "0/0",
-    ip: "141.95.190.141:1361",
-  });
-  const [isCopied, setIsCopied] = useState(false);
+  // const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  // const [serverStatus, setServerStatus] = useState({
+  //   online: false,
+  //   players: "0/0",
+  //   ip: "141.95.190.141:1361",
+  // });
+  // const [isCopied, setIsCopied] = useState(false);
 
-  useEffect(() => {
-    const fetchServerStatus = async () => {
-      try {
-        const response = await fetch(
-          "https://api.gamemonitoring.net/servers/6474613"
-        );
-        const data = await response.json();
+  // useEffect(() => {
+  //   const fetchServerStatus = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         "https://api.gamemonitoring.net/servers/6474613"
+  //       );
+  //       const data = await response.json();
 
-        setServerStatus({
-          online: data.response.status,
-          players: `${data.response.numplayers} / ${data.response.maxplayers}`,
-          ip: data.response.connect,
-        });
-      } catch (error) {
-        console.error("Failed to fetch server status:", error);
-      }
-    };
+  //       setServerStatus({
+  //         online: data.response.status,
+  //         players: `${data.response.numplayers} / ${data.response.maxplayers}`,
+  //         ip: data.response.connect,
+  //       });
+  //     } catch (error) {
+  //       console.error("Failed to fetch server status:", error);
+  //     }
+  //   };
 
-    fetchServerStatus();
-    // Fetch every 30 seconds
-    const interval = setInterval(fetchServerStatus, 30000);
+  //   fetchServerStatus();
+  //   // Fetch every 30 seconds
+  //   const interval = setInterval(fetchServerStatus, 30000);
 
-    return () => clearInterval(interval);
-  }, []);
+  //   return () => clearInterval(interval);
+  // }, []);
 
-  const slogans = useMemo(
-    () => [
-      "შესაძლებლობებით სავსე გარემო",
-      "თქვენი ისტორია იწყება აქ",
-      "შექმენი შენი გზა სან ანდრეასში",
-      "აღმოაჩინე ახალი ცხოვრება",
-      "შენი თავგადასავალი იწყება ახლა",
-      "გახდი ლეგენდა სან ანდრეასში",
-      "შენი შესაძლებლობები უსასრულოა",
-      "გაიკვალე შენი გზა",
-      "ჩართე თამაში, შექმენი ისტორია",
-      "შენი წესები, შენი თამაში",
-      "დაიწყე შენი თავგადასავალი",
-    ],
-    []
-  );
+  // const slogans = useMemo(
+  //   () => [
+  //     "შესაძლებლობებით სავსე გარემო",
+  //     "თქვენი ისტორია იწყება აქ",
+  //     "შექმენი შენი გზა სან ანდრეასში",
+  //     "აღმოაჩინე ახალი ცხოვრება",
+  //     "შენი თავგადასავალი იწყება ახლა",
+  //     "გახდი ლეგენდა სან ანდრეასში",
+  //     "შენი შესაძლებლობები უსასრულოა",
+  //     "გაიკვალე შენი გზა",
+  //     "ჩართე თამაში, შექმენი ისტორია",
+  //     "შენი წესები, შენი თამაში",
+  //     "დაიწყე შენი თავგადასავალი",
+  //   ],
+  //   []
+  // );
 
-  const copyIPToClipboard = () => {
-    navigator.clipboard
-      .writeText(serverStatus.ip)
-      .then(() => {
-        setIsCopied(true);
-        setTimeout(() => setIsCopied(false), 2000);
-      })
-      .catch((err) => console.error("Failed to copy: ", err));
-  };
+  // const copyIPToClipboard = () => {
+  //   navigator.clipboard
+  //     .writeText(serverStatus.ip)
+  //     .then(() => {
+  //       setIsCopied(true);
+  //       setTimeout(() => setIsCopied(false), 2000);
+  //     })
+  //     .catch((err) => console.error("Failed to copy: ", err));
+  // };
 
-  const [displayedText, setDisplayedText] = useState("");
-  const [currentSloganIndex, setCurrentSloganIndex] = useState(0);
-  const [isTyping, setIsTyping] = useState(true);
+  // const [displayedText, setDisplayedText] = useState("");
+  // const [currentSloganIndex, setCurrentSloganIndex] = useState(0);
+  // const [isTyping, setIsTyping] = useState(true);
 
-  useEffect(() => {
-    let timeout: NodeJS.Timeout | undefined;
+  // useEffect(() => {
+  //   let timeout: NodeJS.Timeout | undefined;
 
-    const animateText = async () => {
-      const currentSlogan = slogans[currentSloganIndex];
+  //   const animateText = async () => {
+  //     const currentSlogan = slogans[currentSloganIndex];
 
-      if (isTyping) {
-        if (displayedText.length < currentSlogan.length) {
-          timeout = setTimeout(() => {
-            setDisplayedText(currentSlogan.slice(0, displayedText.length + 1));
-          }, 0.5);
-        } else {
-          timeout = setTimeout(() => {
-            setIsTyping(false);
-          }, 4000);
-        }
-      } else {
-        if (displayedText.length > 0) {
-          timeout = setTimeout(() => {
-            setDisplayedText(displayedText.slice(0, -1));
-          }, 30);
-        } else {
-          setCurrentSloganIndex((prev) => (prev + 1) % slogans.length);
-          setIsTyping(true);
-        }
-      }
-    };
+  //     if (isTyping) {
+  //       if (displayedText.length < currentSlogan.length) {
+  //         timeout = setTimeout(() => {
+  //           setDisplayedText(currentSlogan.slice(0, displayedText.length + 1));
+  //         }, 0.5);
+  //       } else {
+  //         timeout = setTimeout(() => {
+  //           setIsTyping(false);
+  //         }, 4000);
+  //       }
+  //     } else {
+  //       if (displayedText.length > 0) {
+  //         timeout = setTimeout(() => {
+  //           setDisplayedText(displayedText.slice(0, -1));
+  //         }, 30);
+  //       } else {
+  //         setCurrentSloganIndex((prev) => (prev + 1) % slogans.length);
+  //         setIsTyping(true);
+  //       }
+  //     }
+  //   };
 
-    timeout = setTimeout(animateText, 50);
+  //   timeout = setTimeout(animateText, 50);
 
-    return () => {
-      if (timeout) {
-        clearTimeout(timeout);
-      }
-    };
-  }, [displayedText, isTyping, currentSloganIndex, slogans]);
+  //   return () => {
+  //     if (timeout) {
+  //       clearTimeout(timeout);
+  //     }
+  //   };
+  // }, [displayedText, isTyping, currentSloganIndex, slogans]);
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50">
